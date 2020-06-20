@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,16 +28,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import manu.apps.ecart.R;
+import manu.apps.ecart.adapters.ProductAdapter;
 import manu.apps.ecart.adapters.ProductCategoryAdapter;
+import manu.apps.ecart.classes.Product;
 import manu.apps.ecart.classes.ProductCategory;
 import manu.apps.ecart.viewmodels.HomeViewModel;
 
 public class HomeFragment extends Fragment {
 
     HomeViewModel homeViewModel;
-    RecyclerView rvProductCategory;
+    private RecyclerView rvProductCategory;
+    private RecyclerView rvProducts;
     ProductCategoryAdapter productCategoryAdapter;
-    List<ProductCategory> productCategoryList;
+    ProductAdapter productAdapter;
+    private List<ProductCategory> productCategoryList;
+    private List<Product> productList;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -63,12 +69,45 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvProductCategory = view.findViewById(R.id.rv_product_category);
+        rvProducts = view.findViewById(R.id.rv_products);
 
+        productList = new ArrayList<>();
         productCategoryList = new ArrayList<>();
 
+        loadProducts();
         loadProductCategories();
 
-        setProductRecycler(productCategoryList);
+        setUpProductRecycler(productList);
+        setUpProductCategoryRecycler(productCategoryList);
+
+    }
+
+    private void loadProducts(){
+        productList.add(new Product(1,"Japanese Cherry Blossom",
+                "250ml","Ksh 17.00",R.drawable.ic_japanese_cherry));
+        productList.add(new Product(2,"African Mango Shower Gel",
+                "350ml","Ksh 17.00",R.drawable.ic_mango_shower_gel));
+        productList.add(new Product(1,"Japanese Cherry Blossom",
+                "250ml","Ksh 17.00",R.drawable.ic_japanese_cherry));
+        productList.add(new Product(2,"African Mango Shower Gel",
+                "350ml","Ksh 17.00",R.drawable.ic_mango_shower_gel));
+        productList.add(new Product(1,"Japanese Cherry Blossom",
+                "250ml","Ksh 17.00",R.drawable.ic_japanese_cherry));
+        productList.add(new Product(2,"African Mango Shower Gel",
+                "350ml","Ksh 17.00",R.drawable.ic_mango_shower_gel));
+        productList.add(new Product(1,"Japanese Cherry Blossom",
+                "250ml","Ksh 17.00",R.drawable.ic_japanese_cherry));
+        productList.add(new Product(2,"African Mango Shower Gel",
+                "350ml","Ksh 17.00",R.drawable.ic_mango_shower_gel));
+
+    }
+
+    private void setUpProductRecycler(List<Product> productList){
+
+        rvProducts.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        productAdapter = new ProductAdapter(getActivity(), productList);
+        rvProducts.setAdapter(productAdapter);
+
     }
 
     private void loadProductCategories(){
@@ -80,7 +119,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void setProductRecycler(List<ProductCategory> productCategoryList){
+    private void setUpProductCategoryRecycler(List<ProductCategory> productCategoryList){
 
         RecyclerView.LayoutManager  layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         rvProductCategory.setLayoutManager(layoutManager);
