@@ -9,6 +9,14 @@
     android:orientation="vertical"
     android:padding="5dp">
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cart_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your cart is empty"
+        android:theme="@style/ButtonsTheme"
+        android:layout_gravity="center_horizontal"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_product_category"
         android:layout_width="match_parent"
